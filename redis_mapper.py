@@ -11,7 +11,7 @@ class Rlist():
             self.alist = self.get()
 
     def __repr__(self):
-        return "Rlist(%r)" % (self.alist)
+        return "Rlist(%s)=%r" % (self.lname, self.alist)
 
     def exists(self):
         result = False if r.exists(self.lname) is 0 else True
@@ -50,6 +50,7 @@ class RDict():
 
     def __setitem__(self, key, value):
         self.__dict__[key] = value
+        r.hset(self.name, key, value)
         return True
 
     def exists(self):
@@ -103,20 +104,22 @@ class RDict():
 
 # for testing
 if __name__ == "__main__":
-    list_name = "try2"
+    list_name = "my_first_list"
     x = Rlist(list_name)
     print(x)
     x.append(4)
     print(x)
     test = Rlist("testing")
     test.append(5000)
+    print(test)
     test.delete()
     test = RDict('dell')
     test['adolfo'] = 'da boss'
-# error here
-    # result = test.pop('adolfo')
-    # print(result)
-    print(test['adolfo'])
+    print(test)
+    result = test.pop('adolfo')
+    print(result)
+# this correctly throws an error
+    # print(test['adolfo'])
     test.update(boss="adolfo")
     test.delete()
     print(test)
@@ -125,7 +128,7 @@ if __name__ == "__main__":
     test['boss'] = 5
     print(test)
     test.delete()
+    print('HERE')
     print(test.boss)
-    print('HEEEERE')
-# error here 
+#after deletion, error should be handled differently in get method    
     # print(test.get('boss'))
