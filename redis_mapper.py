@@ -42,10 +42,7 @@ class RDict():
                 self[k] = v
 
     def __repr__(self):
-        temp = {}
-        for k, v in self.__dict__.items():
-            if k is not 'name':
-                temp[k] = v
+        temp = { k:v for (k, v) in self.__dict__.items() if k is not 'name' }    
         return "RDict(%s)=%r" % (self.name, temp)
 
     def __getitem__(self, key):
@@ -111,10 +108,14 @@ if __name__ == "__main__":
     print(x)
     x.append(4)
     print(x)
+    test = Rlist("testing")
     test.append(5000)
     test.delete()
     test = RDict('dell')
-    result = test.pop('adolfo')
+    test['adolfo'] = 'da boss'
+# error here
+    # result = test.pop('adolfo')
+    # print(result)
     print(test['adolfo'])
     test.update(boss="adolfo")
     test.delete()
@@ -125,4 +126,6 @@ if __name__ == "__main__":
     print(test)
     test.delete()
     print(test.boss)
-    print(test.get())
+    print('HEEEERE')
+# error here 
+    # print(test.get('boss'))
